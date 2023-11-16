@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment App</title>
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" 
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <!-- css -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <!-- nav bar -->
+    <nav class="navbar">
+        <div class="navbar-center">
+          
+           <span class="nav-icon">
+               <i class="fas fa-bars"></i>
+           </span> 
+           <h2>WELCOME TO HODDIE WORLD</h2>
+            <div class="cart-btn">
+               <span class="nav-icon">
+                   <i class="fas fa-cart-plus"></i>
+               </span> 
+               <div class="cart-items">0</div>
+            </div>
+        </div>
+    </nav>
+    <!-- end of navbar -->
+    <!-- poster-->
+    <header class="hero">
+        <div class="banner">
+           <h1 class="banner-title">Dollars To Wear Fearless Hoddie</h1>
+           <button class="banner-btn">Eyes Down , Guts Up!!</button>  
+        </div>
+    </header>
+    <!-- end of poster-->
+    <!-- products -->
+    <section class="products">
+        <div class="section-title">
+            <h2>Our Products</h2>
+        </div>
+        <div class="products-center">
+            
+        </div>
+    </section> 
+    <!-- end of products -->
+    <!-- cart -->
+        <div class="cart-overlay">
+            <div class="cart">
+               <span class="close-cart">
+                   <i class="fas fa-window-close"></i>
+               </span> 
+               <h2>Your cart</h2>
+               <div class="cart-content">
+                  <!-- cart item -->
+                    <!--<div class="cart-item">
+                      
+                    </div>
+                  <!-- end of cart item --> 
+               </div>
+                <div class="cart-footer">
+                    <h3>your total:  <span class="cart-total">0</span></h3>
+                    <button class="clear-cart banner-btn">clear cart</button>
+                    <h2>Welcome to payment app</h2>
+                    <button id="rzp-button1">Pay</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+          <div class="footer-container">
+              <div class="footer-content">
+                  <h3 style="font-weight: 700; color: black; text-shadow: 2px 1px 2px red;">Contact Us</h3>
+                  <p style="color: black; font-family:'Courier New', Courier, monospace ; font-weight: 700;">Email: hoddiedoddie@gmail.com</p>
+                  <p style="color: black; font-family:'Courier New', Courier, monospace ; font-weight: 700;">Phone: 9090909090</p>
+              </div>
+  
+              <div class="footer-content">
+                  <h3 style="font-weight: 700; color: black; text-shadow: 2px 1px 2px red;">Follow Us</h3>
+                  <a style="color: black; font-family:'Courier New', Courier, monospace ; font-weight: 700;" href="#" target="_blank">Facebook</a>
+                  <a style="color: black; font-family:'Courier New', Courier, monospace ; font-weight: 700;" href="#" target="_blank">Twitter</a>
+                  <a style="color: black; font-family:'Courier New', Courier, monospace ; font-weight: 700;" href="#" target="_blank">Instagram</a>
+              </div>
+  
+              <div class="footer-content">
+                  <h3 style="font-weight: 700; color: black; text-shadow: 2px 1px 2px red;">Address</h3>
+                  <p style="color: black; font-family:'Courier New', Courier, monospace ; font-weight: 700;">24-A Lake Gardens (Sub Office)  </p>
+                  <p style="color: black; font-family:'Courier New', Courier, monospace ; font-weight: 700;">Kolkata, West Bengal (WB), India (IN)</p>
+              </div>
+          </div>
+      </footer>
+    
+
+
+
+
+
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="./main.js"></script> 
+
+<script>
+
+
+
+document.getElementById('rzp-button1').onclick = async function (e){
+    
+    e.preventDefault();
+
+let response = await fetch("http://localhost:3001/payment",{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        amount:500,
+    })
+})
+
+let orderData = await response.json();
+
+    var options = {
+    "key": "rzp_test_Bo9oZ7LjeoAkeF", // Enter the Key ID generated from the Dashboard
+    "amount": "500", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "order_id":orderData.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    
+};
+var rzp1 = new Razorpay(options);
+rzp1.open();
+};
+
+
+</script>
+</body>
+</html>
