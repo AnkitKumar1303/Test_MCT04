@@ -10,7 +10,7 @@ const cors=require("cors");
 app.use(express.json());
 app.use(cors());
 app.get("/",(req,res)=>{
-    res.send("hello world!");
+    res.sendFile(path.join(./public,'/index.html'));
 });
 app.post("/payment", async (req, res)=>{
     let {amount}=req.body;
